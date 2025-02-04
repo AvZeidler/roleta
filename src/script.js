@@ -5,6 +5,10 @@ let historico = localStorage.getItem('historico') || '';
 const MAX_CARACTERES = 14;
 const MAX_OPCOES = 8;
 
+window.onload = function() {
+    atualizarRoda(); 
+};
+
 function atualizarRoda() {
     const svg = document.getElementById('wheel');
     svg.innerHTML = '';
