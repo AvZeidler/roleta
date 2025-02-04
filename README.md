@@ -8,7 +8,7 @@ Se você está procurando uma maneira leve e divertida de decidir o que fazer ou
 
 1. **Adicione o que deseja fazer**: Coloque algo legal, algo divertido ou até uma surpresa! 
 2. **Gire a roleta**: Clique no botão e veja o que o destino tem a te dizer! 🌪
-3. **Aproveite o resultado**: O destino é seu amigo! Seja um filme para assistir, uma atividade para fazer ou uma surpresa para revelar, a Roleta do Amor está aqui para você! 💫
+3. **Aproveite o resultado**: O destino é seu amigo! Seja um filme para assistir, uma atividade para fazer ou uma surpresa para revelar, a Roleta das Escolhas está aqui para você! 💫
 
 ### Características ✨
 
