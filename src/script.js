@@ -2,6 +2,8 @@ let itens = JSON.parse(localStorage.getItem('itensDate')) || [];
 const cores = ['#FFB3BA', '#FFDFBA', '#BAFFC9', '#BAE1FF', '#E3BAFF', '#FF96C5'];
 let anguloAtual = 0;
 let historico = localStorage.getItem('historico') || '';
+const MAX_CARACTERES = 14;
+const MAX_OPCOES = 8;
 
 function atualizarRoda() {
     const svg = document.getElementById('wheel');
@@ -66,6 +68,9 @@ function girar() {
     loading.style.display = 'block';
     document.getElementById('resultado').textContent = '';
 
+    const musicaInicio = document.getElementById('musicaInicio');
+    musicaInicio.play();
+
     const svg = document.getElementById('wheel');
     const girosCompletos = 5;
     const anguloAleatorio = Math.random() * 360;
@@ -82,8 +87,13 @@ function girar() {
         const resultado = itens[indexVencedor];
         document.getElementById('resultado').textContent = `Resultado: ${resultado} 🎉`;
 
-        const musica = document.getElementById('resultadoMusica');
-        musica.play(); // Toca a música
+        const musicaComemoracao = document.getElementById('musicaComemoracao');
+        musicaComemoracao.play(); 
+
+        setTimeout(() => {
+            const musica = document.getElementById('resultadoMusica');
+            musica.play(); 
+        }, 3000);
 
         historico = resultado;
         localStorage.setItem('historico', historico);
@@ -96,16 +106,34 @@ function girar() {
             shapes: ['circle', 'square', 'heart'],
             colors: ['#FFB3BA', '#FFDFBA', '#BAFFC9', '#BAE1FF', '#E3BAFF']
         });
-    }, 5000);
+    }, 5000); 
 }
+
+document.getElementById('itemInput').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        adicionarItem();
+    }
+});
 
 function adicionarItem() {
     const input = document.getElementById('itemInput');
     const valor = input.value.trim();
+
     if (!valor || itens.includes(valor)) {
         exibirPopup('Por favor, insira um valor válido e único.');
         return;
     }
+
+    if (valor.length > MAX_CARACTERES) {
+        exibirPopup(`O item não pode ter mais de ${MAX_CARACTERES} caracteres.`);
+        return;
+    }
+
+    if (itens.length >= MAX_OPCOES) {
+        exibirPopup('Você já tem o número máximo de opções na roleta.');
+        return;
+    }
+
     itens.push(valor);
     input.value = '';
     localStorage.setItem('itensDate', JSON.stringify(itens));
@@ -134,11 +162,62 @@ function exibirPopup(mensagem) {
 function fecharPopup() {
     const popup = document.getElementById('popup');
     const overlay = document.getElementById('overlay');
+    const popupRemover = document.getElementById('popupRemover');
+    const overlayRemover = document.getElementById('overlayRemover');
     popup.style.display = 'none';
     overlay.style.display = 'none';
+    popupRemover.style.display = 'none';
+    overlayRemover.style.display = 'none';
 }
 
-if (itens.length > 0) atualizarRoda();
+function exibirPopupRemover() {
+    const overlayRemover = document.getElementById('overlayRemover');
+    const popupRemover = document.getElementById('popupRemover');
+    const listaOpcoes = document.getElementById('listaOpcoes');
 
-const container = document.querySelector('.container');
-container.addEventListener('click', girar);
+    listaOpcoes.innerHTML = '';
+
+    itens.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.classList.add('opcao-lista');
+        div.textContent = item;
+        div.onclick = () => removerItem(index);
+        listaOpcoes.appendChild(div);
+    });
+
+    overlayRemover.style.display = 'block';
+    popupRemover.style.display = 'block';
+}
+
+function removerItem(index) {
+    itens.splice(index, 1);
+    
+    localStorage.setItem('itensDate', JSON.stringify(itens));
+    
+    atualizarRoda();
+    
+    exibirPopupSucesso("Item removido com sucesso!");
+    
+    fecharPopup(); 
+}
+
+function exibirPopupSucesso(mensagem) {
+    const popupSucesso = document.getElementById('popupSucesso');
+    const overlaySucesso = document.getElementById('overlaySucesso');
+    const popupMensagemSucesso = document.getElementById('popupMensagemSucesso');
+    
+    popupMensagemSucesso.textContent = mensagem;
+    
+    popupSucesso.style.display = 'flex';
+    overlaySucesso.style.display = 'block';
+}
+
+function fecharPopupSucesso() {
+    const popupSucesso = document.getElementById('popupSucesso');
+    const overlaySucesso = document.getElementById('overlaySucesso');
+    
+    popupSucesso.style.display = 'none';
+    overlaySucesso.style.display = 'none';
+}
+
+document.getElementById('wheel').addEventListener('click', girar);
