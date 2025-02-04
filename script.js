@@ -87,7 +87,7 @@ function girar() {
 
         historico = resultado;
         localStorage.setItem('historico', historico);
-        document.getElementById('historico').textContent = `Último date: ${historico}`;
+        document.getElementById('historico').textContent = `Ultimo sorteio: ${historico}`;
 
         confetti({
             particleCount: 300,
