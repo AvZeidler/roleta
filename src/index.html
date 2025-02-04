@@ -2,14 +2,13 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Roda do Amor</title>
+    <title>Roda das Escolhas</title>
     <!-- Referência para o CSS externo -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>⭐Vamos ver... ⭐</h1>
+    <h1>⭐ Vamos ver... ⭐</h1>
 
-    
     <div class="input-container">
         <input type="text" id="itemInput" placeholder="O que podemos fazer..." aria-label="Adicionar item à roda">
         <button onclick="adicionarItem()" aria-label="Adicionar item">Adicionar</button>
@@ -24,18 +23,42 @@
     <div class="footer-container">
         <div class="botoes">
             <button onclick="limparCache()" aria-label="Limpar roda">Limpar</button>
+            <button id="btnRemover" onclick="exibirPopupRemover()" aria-label="Remover item">Remover Item</button>
         </div>
         <div id="historico"></div>
     </div>
 
-    <!-- Pop-up -->
+    <!-- Pop-up para mensagem geral -->
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
         <p id="popupMessage"></p>
         <button onclick="fecharPopup()">OK</button>
     </div>
 
-    <!-- Adicionando o arquivo de áudio -->
+    <!-- Pop-up para remover item -->
+    <div class="overlay" id="overlayRemover"></div>
+    <div class="popup" id="popupRemover">
+        <h2>Escolha um item para remover</h2>
+        <div id="listaOpcoes"></div>
+        <button onclick="fecharPopup()">Fechar</button>
+    </div>
+
+    <!-- Pop-up de sucesso -->
+    <div class="overlay" id="overlaySucesso"></div>
+    <div class="popup" id="popupSucesso">
+        <p id="popupMensagemSucesso"></p>
+        <button onclick="fecharPopupSucesso()">OK</button>
+    </div>
+
+    <!-- Imagem de Sucesso (Oculta inicialmente) -->
+    <div id="sucesso" style="display:none;">
+        <img src="assets/icons/sucesso.png" alt="Item removido com sucesso!" />
+        <p>Item removido com sucesso!</p>
+    </div>
+
+    <!-- Importando os Áudios -->
+    <audio id="musicaInicio" src="assets/music/roleta.mp3" preload="auto"></audio>
+    <audio id="musicaComemoracao" src="assets/music/comemoracao.mp3"></audio>
     <audio id="resultadoMusica" src="assets/music/music.mp3" preload="auto"></audio>
 
     <!-- Importando a biblioteca de confetes -->
@@ -43,6 +66,5 @@
 
     <!-- Referência para o JS externo -->
     <script src="script.js"></script>
-
 </body>
 </html>
